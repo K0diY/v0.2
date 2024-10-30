@@ -18,24 +18,24 @@ void nuskaitytiIsFailo(std::vector<Studentas>& studentai) {
     }
 }
 
-// Generuoja atsitiktiná studentø sàrağà ir iğsaugo á failà
+// Generuoja atsitiktinÃ¡ studentÃ¸ sÃ raÃ°Ã  ir iÃ°saugo Ã¡ failÃ 
 void generuotiFaila(const std::string& failoVardas, int studentuKiekis) {
     std::ofstream file(failoVardas);
     std::random_device rd;
     std::mt19937 gen(rd());
-    std::uniform_int_distribution<> nd_dist(1, 10); // Namø darbø balai tarp 1 ir 10
-    std::uniform_int_distribution<> egz_dist(1, 10); // Egzaminø balai tarp 1 ir 10
+    std::uniform_int_distribution<> nd_dist(1, 10); // NamÃ¸ darbÃ¸ balai tarp 1 ir 10
+    std::uniform_int_distribution<> egz_dist(1, 10); // EgzaminÃ¸ balai tarp 1 ir 10
 
     for (int i = 1; i <= studentuKiekis; ++i) {
         file << "Vardas" << i << " Pavarde" << i;
-        for (int j = 0; j < 5; ++j) { // 5 namø darbø balai
+        for (int j = 0; j < 5; ++j) { // 5 namÃ¸ darbÃ¸ balai
             file << " " << nd_dist(gen);
         }
         file << " " << egz_dist(gen) << "\n";
     }
 }
 
-// Nuskaitymas iğ failo
+// Nuskaitymas iÃ° failo
 void nuskaitytiIsFailo(const std::string& failoVardas, std::vector<Studentas>& studentai) {
     std::ifstream file(failoVardas);
     if (!file) throw std::runtime_error("Nepavyko atidaryti failo.");
@@ -51,7 +51,7 @@ void nuskaitytiIsFailo(const std::string& failoVardas, std::vector<Studentas>& s
     }
 }
 
-// Padalina studentus á dvi kategorijas pagal galutiná paşymá
+// Padalina studentus Ã¡ dvi kategorijas pagal galutinÃ¡ paÃ¾ymÃ¡
 void rusiuotiStudentus(const std::vector<Studentas>& studentai, std::vector<Studentas>& nuskriaustukai, std::vector<Studentas>& galvotieji) {
     for (const auto& studentas : studentai) {
         if (studentas.gautiGalutini() < 5.0)
@@ -61,10 +61,10 @@ void rusiuotiStudentus(const std::vector<Studentas>& studentai, std::vector<Stud
     }
 }
 
-// Iğsaugo studentus á failà
+// IÃ°saugo studentus Ã¡ failÃ 
 void issaugotiIFaila(const std::string& failoVardas, const std::vector<Studentas>& studentai) {
     std::ofstream file(failoVardas);
-    file << std::setw(15) << "Pavardë" << std::setw(15) << "Vardas" << std::setw(15) << "Galutinis (Vid.)" << "\n";
+    file << std::setw(15) << "PavardÃ«" << std::setw(15) << "Vardas" << std::setw(15) << "Galutinis (Vid.)" << "\n";
     file << "----------------------------------------------------------\n";
     for (const auto& studentas : studentai) {
         file << studentas;
@@ -76,7 +76,7 @@ int main() {
     int pasirinkimas;
     bool naudotiVidurki;
 
-    std::cout << "Pasirinkite paşymio skaièiavimo metodà (1 - vidurkis, 2 - mediana): ";
+    std::cout << "Pasirinkite paÃ¾ymio skaiÃ¨iavimo metodÃ  (1 - vidurkis, 2 - mediana): ";
     std::cin >> pasirinkimas;
     naudotiVidurki = pasirinkimas == 1;
 
@@ -84,7 +84,7 @@ int main() {
 
     for (Studentas& studentas : studentai) studentas.skaiciuotiGalutini(naudotiVidurki);
 
-    std::cout << "Pavardë     Vardas       Galutinis (Vid.) / Galutinis (Med.)" << std::endl;
+    std::cout << "PavardÃ«     Vardas       Galutinis (Vid.) / Galutinis (Med.)" << std::endl;
     std::cout << "----------------------------------------------------------" << std::endl;
     for (const Studentas& studentas : studentai) std::cout << studentas;
 
@@ -99,15 +99,15 @@ int main() {
         std::chrono::duration<double> trukme = pabaiga - pradzia;
         std::cout << "Failo generavimas (" << kiekis << " irasu): " << trukme.count() << " s\n";
 
-        // Duomenø nuskaitymas
+        // DuomenÃ¸ nuskaitymas
         std::vector<Studentas> studentai;
         pradzia = std::chrono::high_resolution_clock::now();
         nuskaitytiIsFailo(failoVardas, studentai);
         pabaiga = std::chrono::high_resolution_clock::now();
         trukme = pabaiga - pradzia;
-        std::cout << "Duomenø nuskaitymas (" << kiekis << " irasu): " << trukme.count() << " s\n";
+        std::cout << "DuomenÃ¸ nuskaitymas (" << kiekis << " irasu): " << trukme.count() << " s\n";
 
-        // Galutinio balo skaièiavimas ir rûğiavimas á kategorijas
+        // Galutinio balo skaiÃ¨iavimas ir rÃ»Ã°iavimas Ã¡ kategorijas
         for (auto& studentas : studentai) studentas.skaiciuotiGalutini(true);
 
         std::vector<Studentas> nuskriaustukai, galvotieji;
@@ -115,15 +115,15 @@ int main() {
         rusiuotiStudentus(studentai, nuskriaustukai, galvotieji);
         pabaiga = std::chrono::high_resolution_clock::now();
         trukme = pabaiga - pradzia;
-        std::cout << "Rûğiavimas á kategorijas (" << kiekis << " irasu): " << trukme.count() << " s\n";
+        std::cout << "RÃ»Ã°iavimas Ã¡ kategorijas (" << kiekis << " irasu): " << trukme.count() << " s\n";
 
-        // Iğvedimas á atskirus failus
+        // IÃ°vedimas Ã¡ atskirus failus
         pradzia = std::chrono::high_resolution_clock::now();
         issaugotiIFaila("nuskriaustukai_" + std::to_string(kiekis) + ".txt", nuskriaustukai);
         issaugotiIFaila("galvotieji_" + std::to_string(kiekis) + ".txt", galvotieji);
         pabaiga = std::chrono::high_resolution_clock::now();
         trukme = pabaiga - pradzia;
-        std::cout << "Iğvedimas á failus (" << kiekis << " irasu): " << trukme.count() << " s\n";
+        std::cout << "IÃ°vedimas Ã¡ failus (" << kiekis << " irasu): " << trukme.count() << " s\n";
     }
 
     return 0;
